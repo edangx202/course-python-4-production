@@ -9,6 +9,7 @@ from global_utils import get_file_name, make_dir, plot_sales_data
 from datetime import datetime
 import json
 
+from collections import defaultdict
 
 CURRENT_FOLDER_NAME = os.path.dirname(os.path.abspath(__file__))
 
@@ -44,7 +45,19 @@ def revenue_per_region(dp: DataProcessor) -> Dict:
     }
     """
     ######################################## YOUR CODE HERE ##################################################
-
+    # get generator from data_reader
+    data_reader_gen = (row for row in dp.data_reader)
+    # skip first row as it is the column name
+    _ = next(data_reader_gen)
+    
+    ctry_dict = defaultdict(lambda: 0)
+    for row in data_reader_gen:
+        if row['Country'] in ctry_dict.keys():
+            ctry_dict[row['Country']] += float(row['TotalPrice'])
+        else:
+            ctry_dict[row['Country']] = float(row['TotalPrice'])
+    
+    return ctry_dict
     ######################################## YOUR CODE HERE ##################################################
 
 

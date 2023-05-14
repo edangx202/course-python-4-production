@@ -112,7 +112,12 @@ class DataReader:
         }
         """
     ######################################## YOUR CODE HERE ##################################################
-
+        col_names = self.get_column_names()
+        
+        for row in open(self.get_file_path(), 'r'):
+            row_spilt = row.split(self._sep)
+            one_row = {col_names[idx] : value for idx, value in enumerate(row_spilt)}
+            yield one_row
     ######################################## YOUR CODE HERE ##################################################
 
     def get_file_path(self):
