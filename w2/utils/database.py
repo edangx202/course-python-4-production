@@ -1,4 +1,3 @@
-
 # import the sqlite3 package
 import sqlite3
 from datetime import datetime
@@ -45,7 +44,16 @@ class DB:
         Read more about datatypes in Sqlite here -> https://www.sqlite.org/datatype3.html
         """
     ######################################## YOUR CODE HERE ##################################################
-
+        self._connection.execute(f'''CREATE TABLE IF NOT EXISTS {self._table_name} 
+                                (
+                                    process_id TEXT NOT NULL,
+                                    file_name TEXT DEFAULT NULL,
+                                    file_path TEXT DEFAULT NULL,
+                                    description TEXT DEFAULT NULL,
+                                    start_time TEXT NOT NULL,
+                                    end_time TEXT DEFAULT NULL,
+                                    percentage REAL DEFAULT NULL)'''
+                                )
     ######################################## YOUR CODE HERE ##################################################
 
     def insert(self, process_id, start_time, file_name=None, file_path=None,
@@ -63,7 +71,11 @@ class DB:
         :return: None
         """
     ######################################## YOUR CODE HERE ##################################################
-
+        self._connection.execute(f'''INSERT INTO {self._table_name} 
+                                (process_id, file_name, file_path, description, start_time, end_time, percentage) 
+                                VALUES (?,?,?,?,?,?,?)''', 
+                                (process_id, file_name, file_path, description, start_time, end_time, percentage))
+        self._connection.commit()        
     ######################################## YOUR CODE HERE ##################################################
 
     def read_all(self) -> List[Dict]:
@@ -82,7 +94,8 @@ class DB:
 
     def update_end_time(self, process_id, end_time):
         self._connection.execute(f'''UPDATE {self._table_name} SET end_time='{end_time}'
-                                     WHERE process_id='{process_id}';''')
+                                     WHERE process_id='{process_id}';
+                                    ''')
 
         self._connection.commit()
 
@@ -95,7 +108,11 @@ class DB:
         :return: None
         """
     ######################################## YOUR CODE HERE ##################################################
-
+        self._connection.execute(f'''UPDATE {self._table_name} 
+                                    SET percentage = '{percentage}' 
+                                    WHERE process_id = '{process_id}';
+                                    ''')
+        self._connection.commit()
     ######################################## YOUR CODE HERE ##################################################
 
 
