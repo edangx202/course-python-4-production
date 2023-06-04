@@ -18,32 +18,37 @@ class Logger:
         self.f_handler = logging.FileHandler(os.path.join(CURRENT_FOLDER_NAME, 'logs', log_file_name))
 
         # Create formatters and add it to handlers
+        self.f_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         ######################################## YOUR CODE HERE ##################################################
         # set the logging formatter to the f_handler
+        self.f_handler.setFormatter(self.f_format)
         ######################################## YOUR CODE HERE ##################################################
 
         ######################################## YOUR CODE HERE ##################################################
         # Add handlers to the logger and setlevel to DEBUG
+        self.logger.addHandler(self.f_handler)
+        # self.f_handler.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.DEBUG)
         ######################################## YOUR CODE HERE ##################################################
 
     def warning(self, msg):
-        pass
         ######################################## YOUR CODE HERE ##################################################
+        self.logger.warning(msg)
         ######################################## YOUR CODE HERE ##################################################
 
     def error(self, msg):
-        pass
         ######################################## YOUR CODE HERE ##################################################
+        self.logger.error(msg)
         ######################################## YOUR CODE HERE ##################################################
 
     def info(self, msg):
-        pass
         ######################################## YOUR CODE HERE ##################################################
+        self.logger.info(msg)
         ######################################## YOUR CODE HERE ##################################################
 
     def debug(self, msg):
-        pass
         ######################################## YOUR CODE HERE ##################################################
+        elf.logger.debug(msg)
         ######################################## YOUR CODE HERE ##################################################
 
 
